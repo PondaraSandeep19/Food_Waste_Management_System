@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Waste Management System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f8ff;
+        }
+        h2 {
+            color: #333;
+        }
+        .container {
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+            background-color: #fff;
+        }
+        input[type="text"], input[type="password"], select {
+            width: 100%;
+            padding: 8px;
+            margin: 8px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .btn {
+            width: 100%;
+            padding: 10px;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background-color: #45a049;
+        }
+        .popup {
+            display: none;
+            padding: 10px;
+            border-radius: 4px;
+            background-color: #4caf50;
+            color: white;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Food Waste Management System</h2>
+    <div class="popup" id="popup">You are online</div>
+    <form id="loginForm">
+        <label for="role">Role</label>
+        <select id="role" required>
+            <option value="donate">Donor</option>
+            <option value="deliver">Delivery</option>
+        </select>
+
+        <label for="username">Username (Gmail)</label>
+        <input type="text" id="username" placeholder="Enter Gmail" required>
+
+        <label for="password">Password (Max 10, lowercase & symbols)</label>
+        <input type="password" id="password" placeholder="Enter Password" required>
+
+        <button type="button" class="btn" onclick="login()">Login</button>
+    </form>
+
+    <div id="donateSection" style="display:none;">
+        <h3>Donate Food</h3>
+        <label for="foodName">Food Item</label>
+        <input type="text" id="foodName" placeholder="Enter food item name">
+
+        <label for="quantity">Quantity</label>
+        <input type="number" id="quantity" placeholder="Enter quantity">
+
+        <button type="button" class="btn" onclick="submitDonation()">Donate</button>
+    </div>
+
+    <div id="deliverySection" style="display:none;">
+        <h3>Delivery Status</h3>
+        <p>Delivery is available in your location.</p>
+        <button type="button" class="btn" onclick="goOnline()">Go Online</button>
+    </div>
+</div>
+
+<script>
+    function login() {
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
+        const role = document.getElementById("role").value;
+
+        // Basic validation for email format and password constraints
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
+        const passwordRegex = /^[a-z!@#\$%\^&*]{1,10}$/;
+
+        if (!emailRegex.test(username)) {
+            alert("Username should be a valid Gmail address.");
+            return;
+        }
+        if (!passwordRegex.test(password)) {
+            alert("Password should be lowercase letters with symbols, max 10 characters.");
+            return;
+        }
+
+        // Display appropriate section based on role
+        document.getElementById("loginForm").style.display = "none";
+        if (role === "donate") {
+            document.getElementById("donateSection").style.display = "block";
+        } else if (role === "deliver") {
+            document.getElementById("deliverySection").style.display = "block";
+        }
+    }
+
+    function submitDonation() {
+        const foodName = document.getElementById("foodName").value;
+        const quantity = document.getElementById("quantity").value;
+
+        if (foodName && quantity) {
+            alert(`Thank you for donating ${quantity} of ${foodName}`);
+            document.getElementById("foodName").value = "";
+            document.getElementById("quantity").value = "";
+        } else {
+            alert("Please enter both food name and quantity.");
+        }
+    }
+
+    function goOnline() {
+        document.getElementById("popup").style.display = "block";
+        alert("You are online and ready for delivery.");
+        // Here you can add any additional functionality for the delivery person.
+    }
+</script>
+
+</body>
+</html>
